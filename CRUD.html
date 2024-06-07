@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Admin Panel</title>
+  <link rel="stylesheet" href="admin-style.css">
+  <script src="https://www.gstatic.com/firebasejs/8.5.0/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.5.0/firebase-firestore.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.5.0/firebase-auth.js"></script>
+  <script src="firebase.js"></script>
+  
+</head>
+<body>
+  <!-- Navigation Bar -->
+  <div class="navbar">
+    <a href="#" class="nav_logo">EDIT Portfolio</a>
+    <ul class="nav_items">
+      <li class="nav_item"><a href="admin/about.html" class="nav_link">About</a></li>
+      <li class="nav_item"><a href="admin/skills.html" class="nav_link">Skills</a></li>
+      <li class="nav_item"><a href="admin/skills.html" class="nav_link">Services</a></li>
+      <li class="nav_item"><a href="/CRUD.html" class="nav_link">Add Skills</a></li>
+    </ul>
+  </div>
+
+  <!-- Main Content -->
+  <div class="container">
+    <h1>Edit your service offered</h1>
+    <form id="service-form" class="service-form">
+      <input type="text" id="service-topic" placeholder="Service Topic" required>
+      <textarea id="service-description" placeholder="Service Description" required></textarea>
+      <input type="text" id="service-icon" placeholder="Service Icon Class (FontAwesome)" required>
+      <button type="submit">Add Service</button>
+    </form>
+    <div id="services-list" class="services-list"></div>
+  </div>
+
+  <script>
+    const serviceForm = document.getElementById('service-form');
+    const servicesList = document.getElementById('services-list');
+
+    // Fetch and display services from Firestore
+    function fetchServices() {
+      db.collection('services').get().then(snapshot => {
+        servicesList.innerHTML = '';
+        snapshot.forEach(doc => {
+          const service = doc.data();
+          const serviceItem = document.createElement('div');
+          serviceItem.classList.add('service-item');
+          serviceItem.innerHTML = `
+            <div class="service-content">
+              <i class="${service.icon} service-icon"></i>
+              <div>
+                <h2 class="service-topic">${service.topic}</h2>
+                <p class="service-description">${service.description}</p>
+              </div>
+            </div>
+            <button class="delete-btn" onclick="deleteService('${doc.id}')">Delete</button>
+          `;
+          servicesList.appendChild(serviceItem);
+        });
+      });
+    }
+
+    // Add a new service to Firestore
+    serviceForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const topic = document.getElementById('service-topic').value;
+      const description = document.getElementById('service-description').value;
+      const icon = document.getElementById('service-icon').value;
+
+      db.collection('services').add({
+        topic,
+        description,
+        icon
+      }).then(() => {
+        fetchServices();
+        serviceForm.reset();
+      });
+    });
+
+    // Delete a service from Firestore
+    function deleteService(id) {
+      db.collection('services').doc(id).delete().then(() => {
+        fetchServices();
+      });
+    }
+
+    // Initial fetch of services
+    fetchServices();
+  </script>
+</body>
+</html>

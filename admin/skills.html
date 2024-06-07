@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Edit Skills Section</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <link rel="stylesheet" href="skills.css">
+  <script src="https://www.gstatic.com/firebasejs/8.5.0/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.5.0/firebase-firestore.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.5.0/firebase-auth.js"></script>
+  <script>
+    const firebaseConfig = {
+      apiKey: "AIzaSyCSU-k8Jq1xToWcB1ziTkbRIRsdP-ZQaQM",
+      authDomain: "dbmsfinalproject-bf251.firebaseapp.com",
+      projectId: "dbmsfinalproject-bf251",
+      storageBucket: "dbmsfinalproject-bf251.appspot.com",
+      messagingSenderId: "90588500114",
+      appId: "1:90588500114:web:6c043a1f9f7337ac8a964b",
+      measurementId: "G-LX32VZK2ZM"
+    };
+    firebase.initializeApp(firebaseConfig);
+    const db = firebase.firestore();
+    const auth = firebase.auth();
+  </script>
+</head>
+<body>
+    <div class="navbar">
+        <a href="#" class="nav_logo">EDIT Portfolio</a>
+        <ul class="nav_items">
+          <li class="nav_item"><a href="about.html" class="nav_link">About</a></li>
+          <li class="nav_item"><a href="skills.html" class="nav_link">Skills</a></li>
+          <li class="nav_item"><a href="services.html" class="nav_link">Services</a></li>
+          <li class="nav_item"><a href="/CRUD.html" class="nav_link">Add Skills</a></li>
+        </ul>
+      </div>
+  <div class="container mt-5">
+    <h1 class="text-center mb-4">Edit Skills Section</h1>
+    <form id="skills-form" class="bg-white p-5 rounded shadow-lg">
+      <div class="form-group">
+        <label for="skills-intro" class="font-weight-bold">Skills Introduction</label>
+        <textarea id="skills-intro" class="form-control" rows="3" placeholder="Write an introduction about your skills..." required></textarea>
+      </div>
+      <div id="skills-inputs" class="form-group">
+        <div class="skill-input input-group mb-3">
+          <input type="text" placeholder="Skill Topic" class="form-control skill-topic" required>
+          <input type="number" placeholder="Skill Percentage" class="form-control skill-percentage" min="0" max="100" required>
+          <div class="input-group-append">
+            <button class="btn btn-danger remove-skill" type="button">Remove</button>
+          </div>
+        </div>
+      </div>
+      <button type="button" id="add-skill" class="btn btn-primary btn-block mb-3">Add Skill</button>
+      <button type="submit" class="btn btn-success btn-block">Update Skills</button>
+    </form>
+  </div>
+
+  <script>
+    const skillsForm = document.getElementById('skills-form');
+    const addSkillButton = document.getElementById('add-skill');
+    const skillsInputs = document.getElementById('skills-inputs');
+
+    addSkillButton.addEventListener('click', () => {
+      const skillInput = document.createElement('div');
+      skillInput.classList.add('skill-input', 'input-group', 'mb-3');
+      skillInput.innerHTML = `
+        <input type="text" placeholder="Skill Topic" class="form-control skill-topic" required>
+        <input type="number" placeholder="Skill Percentage" class="form-control skill-percentage" min="0" max="100" required>
+        <div class="input-group-append">
+          <button class="btn btn-danger remove-skill" type="button">Remove</button>
+        </div>
+      `;
+      skillsInputs.appendChild(skillInput);
+      skillInput.querySelector('.remove-skill').addEventListener('click', () => {
+        skillsInputs.removeChild(skillInput);
+      });
+    });
+
+    skillsForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const skillsIntro = document.getElementById('skills-intro').value;
+      const skillTopics = document.querySelectorAll('.skill-topic');
+      const skillPercentages = document.querySelectorAll('.skill-percentage');
+
+      const skills = [];
+      skillTopics.forEach((topic, index) => {
+        skills.push({
+          topic: topic.value,
+          percentage: skillPercentages[index].value
+        });
+      });
+
+      db.collection('content').doc('skills').set({
+        intro: skillsIntro,
+        skills: skills
+      }).then(() => {
+        alert('Skills section updated!');
+      }).catch((error) => {
+        console.error('Error updating skills section: ', error);
+      });
+    });
+  </script>
+</body>
+</html>

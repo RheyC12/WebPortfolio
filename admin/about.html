@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Edit About Section</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <link rel="stylesheet" href="about.css">
+  <script src="https://www.gstatic.com/firebasejs/8.5.0/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.5.0/firebase-firestore.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.5.0/firebase-storage.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.5.0/firebase-auth.js"></script>
+  <script>
+    const firebaseConfig = {
+      apiKey: "AIzaSyCSU-k8Jq1xToWcB1ziTkbRIRsdP-ZQaQM",
+      authDomain: "dbmsfinalproject-bf251.firebaseapp.com",
+      projectId: "dbmsfinalproject-bf251",
+      storageBucket: "dbmsfinalproject-bf251.appspot.com",
+      messagingSenderId: "90588500114",
+      appId: "1:90588500114:web:6c043a1f9f7337ac8a964b",
+      measurementId: "G-LX32VZK2ZM"
+    };
+    firebase.initializeApp(firebaseConfig);
+    const db = firebase.firestore();
+    const storage = firebase.storage();
+    const auth = firebase.auth();
+  </script>
+</head>
+<body>
+    <div class="navbar">
+        <a href="#" class="nav_logo">EDIT Portfolio</a>
+        <ul class="nav_items">
+          <li class="nav_item"><a href="about.html" class="nav_link">About</a></li>
+          <li class="nav_item"><a href="skills.html" class="nav_link">Skills</a></li>
+          <li class="nav_item"><a href="services.html" class="nav_link">Services</a></li>
+          <li class="nav_item"><a href="/CRUD.html" class="nav_link">Add Skills</a></li>
+        </ul>
+      </div>
+  <div class="container mt-5">
+    <h1 class="text-center mb-4">Edit About Section</h1>
+    <form id="about-form" class="bg-white p-5 rounded shadow-lg">
+      <div class="form-group">
+        <label for="about-image" class="font-weight-bold">Upload Image</label>
+        <input type="file" id="about-image" class="form-control-file" accept="image/*" required>
+      </div>
+      <div class="form-group">
+        <label for="about-content" class="font-weight-bold">About Content</label>
+        <textarea id="about-content" class="form-control" rows="5" placeholder="Write something about yourself..." required></textarea>
+      </div>
+      <button type="submit" class="btn btn-success btn-block">Update About</button>
+    </form>
+  </div>
+
+  <script>
+    const aboutForm = document.getElementById('about-form');
+
+    aboutForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const aboutContent = document.getElementById('about-content').value;
+      const aboutImage = document.getElementById('about-image').files[0];
+
+      const storageRef = storage.ref();
+      const aboutImageRef = storageRef.child(`about/${aboutImage.name}`);
+
+      aboutImageRef.put(aboutImage).then((snapshot) => {
+        return snapshot.ref.getDownloadURL();
+      }).then((downloadURL) => {
+        return db.collection('content').doc('about').set({
+          content: aboutContent,
+          imageUrl: downloadURL
+        });
+      }).then(() => {
+        alert('About section updated!');
+      }).catch((error) => {
+        console.error('Error updating about section: ', error);
+      });
+    });
+  </script>
+</body>
+</html>

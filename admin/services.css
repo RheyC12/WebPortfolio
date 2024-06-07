@@ -1,0 +1,77 @@
+body {
+  background-color: #f8f9fa;
+  font-family: 'Arial', sans-serif;
+  background-image: url(/BG-admin.jpg);
+}
+
+h1 {
+  font-family: 'Helvetica', sans-serif;
+  color: #ffffff;
+}
+
+.card {
+  border: 1px solid #dee2e6;
+}
+
+.card-header {
+  background-color: #fff;
+}
+
+.form-control-file {
+  border-radius: 0.25rem;
+}
+
+.btn {
+  font-size: 1rem;
+  border-radius: 0.25rem;
+}
+
+.img-thumbnail {
+  border: none;
+}
+
+.list-group-item {
+  background-color: #fff;
+}
+/* Navigation Bar Styles */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: rgba(52, 67, 234, 0.336); /* Transparent background */
+  padding: 10px 20px;
+  position: fixed;
+  width: 100%;
+  top: 0;
+  left: 0;
+  z-index: 1000;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Slight shadow for depth */
+}
+.navbar a {
+  text-decoration: none;
+  color: #ffffff;
+  padding: 10px 20px;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+.navbar a:hover {
+  background-color: #000967;
+  color: #fff;
+  border-radius: 5px;
+}
+.navbar .nav_logo {
+  font-size: 24px;
+  font-weight: bold;
+  color: #ffffff;
+}
+.navbar .nav_items {
+  list-style: none;
+  display: flex;
+  margin-right: 10%;
+  padding: 0;
+}
+.navbar .nav_item {
+  margin-left: 20px;
+}
+.container {
+  padding: 80px 20px 20px; /* Adjusted padding to account for the fixed navbar */
+}

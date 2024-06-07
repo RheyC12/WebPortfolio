@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Freelancer Portfolio - Web Development</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="back-btn" onclick="window.history.back()">✖</div>
+  <div id="portfolio">
+    <h1>Web Development Portfolio</h1>
+    <div id="video-gallery">
+      <!-- Videos will be appended here -->
+    </div>
+  </div>
+  <script src="https://www.gstatic.com/firebasejs/8.5.0/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.5.0/firebase-storage.js"></script>
+  <script>
+    // Your web app's Firebase configuration
+    const firebaseConfig = {
+      apiKey: "AIzaSyCSU-k8Jq1xToWcB1ziTkbRIRsdP-ZQaQM",
+      authDomain: "dbmsfinalproject-bf251.firebaseapp.com",
+      projectId: "dbmsfinalproject-bf251",
+      storageBucket: "dbmsfinalproject-bf251.appspot.com",
+      messagingSenderId: "90588500114",
+      appId: "1:90588500114:web:6c043a1f9f7337ac8a964b",
+      measurementId: "G-LX32VZK2ZM"
+    };
+
+    // Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
+    const storage = firebase.storage();
+
+    // Function to display videos
+    function displayVideos(urls) {
+      const videoGalleryDiv = document.getElementById('video-gallery');
+      videoGalleryDiv.innerHTML = ''; // Clear any existing videos
+
+      urls.forEach((url) => {
+        const videoDiv = document.createElement('div');
+        videoDiv.className = 'video';
+
+        const video = document.createElement('video');
+        video.src = url;
+        video.controls = true;
+
+        videoDiv.appendChild(video);
+        videoGalleryDiv.appendChild(videoDiv);
+      });
+    }
+
+    // Retrieve and display video items from Firebase Storage
+    const webDevRef = storage.ref('portfolio/WebDev');
+    webDevRef.listAll()
+      .then((res) => {
+        console.log('List All Response:', res); // Log response
+        const urls = [];
+        const promises = res.items.map((itemRef) =>
+          itemRef.getDownloadURL()
+            .then((url) => {
+              console.log('Download URL:', url); // Log URL
+              urls.push(url);
+            })
+            .catch((error) => {
+              console.error('Error fetching URL:', error); // Log error fetching individual URL
+            })
+        );
+
+        Promise.all(promises)
+          .then(() => {
+            if (urls.length === 0) {
+              console.error('No URLs retrieved.');
+            }
+            displayVideos(urls);
+          })
+          .catch((error) => {
+            console.error('Error retrieving URLs:', error); // Log error when resolving promises
+          });
+      })
+      .catch((error) => {
+        console.error('Error listing items:', error); // Log error listing items
+      });
+  </script>
+</body>
+</html>

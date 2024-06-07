@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Edit Services Section</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <link rel="stylesheet" href="services.css">
+  <script src="https://www.gstatic.com/firebasejs/8.5.0/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.5.0/firebase-database.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.5.0/firebase-storage.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.5.0/firebase-auth.js"></script>
+
+  <script>
+    const firebaseConfig = {
+      apiKey: "AIzaSyCSU-k8Jq1xToWcB1ziTkbRIRsdP-ZQaQM",
+      authDomain: "dbmsfinalproject-bf251.firebaseapp.com",
+      databaseURL: "https://dbmsfinalproject-bf251-default-rtdb.firebaseio.com",
+      projectId: "dbmsfinalproject-bf251",
+      storageBucket: "dbmsfinalproject-bf251.appspot.com",
+      messagingSenderId: "90588500114",
+      appId: "1:90588500114:web:6c043a1f9f7337ac8a964b",
+      measurementId: "G-LX32VZK2ZM"
+    };
+    firebase.initializeApp(firebaseConfig);
+    const database = firebase.database();
+    const storage = firebase.storage();
+    const auth = firebase.auth();
+  </script>
+</head>
+<body>
+  <div class="navbar">
+    <a href="#" class="nav_logo">EDIT Portfolio</a>
+    <ul class="nav_items">
+      <li class="nav_item"><a href="about.html" class="nav_link">About</a></li>
+      <li class="nav_item"><a href="skills.html" class="nav_link">Skills</a></li>
+      <li class="nav_item"><a href="services.html" class="nav_link">Services</a></li>
+      <li class="nav_item"><a href="/CRUD.html" class="nav_link">Add Skills</a></li>
+    </ul>
+  </div>
+  <div class="container mt-5">
+    <h1 class="text-center mb-4">Edit Services Section</h1>
+    <div class="row">
+      <div class="col-md-6">
+        <div class="card mb-4">
+          <div class="card-header text-center">
+            <h2>Pictures</h2>
+          </div>
+          <div class="card-body">
+            <form id="picture-form" class="mb-4">
+              <div class="form-group">
+                <input type="file" id="picture-input" class="form-control-file" accept="image/*" required>
+              </div>
+              <button type="submit" class="btn btn-primary btn-block">Add Picture</button>
+            </form>
+            <button id="delete-last-picture" class="btn btn-danger btn-block mb-4">Delete Last Picture</button>
+            <ul id="pictures-list" class="list-group"></ul>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="card mb-4">
+          <div class="card-header text-center">
+            <h2>Videos</h2>
+          </div>
+          <div class="card-body">
+            <form id="video-form" class="mb-4">
+              <div class="form-group">
+                <input type="file" id="video-input" class="form-control-file" accept="video/*" required>
+              </div>
+              <button type="submit" class="btn btn-primary btn-block">Add Video</button>
+            </form>
+            <button id="delete-last-video" class="btn btn-danger btn-block mb-4">Delete Last Video</button>
+            <ul id="videos-list" class="list-group"></ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const picturesRef = database.ref('services/pictures');
+    const videosRef = database.ref('services/videos');
+
+    // Handle picture upload
+    document.getElementById('picture-form').addEventListener('submit', (e) => {
+      e.preventDefault();
+      const file = document.getElementById('picture-input').files[0];
+      const storageRef = storage.ref(`pictures/${file.name}`);
+      storageRef.put(file).then(snapshot => {
+        return snapshot.ref.getDownloadURL();
+      }).then(url => {
+        const newPictureRef = picturesRef.push();
+        newPictureRef.set({ url, name: file.name });
+        document.getElementById('picture-form').reset();
+      }).catch(console.error);
+    });
+
+    // Handle video upload
+    document.getElementById('video-form').addEventListener('submit', (e) => {
+      e.preventDefault();
+      const file = document.getElementById('video-input').files[0];
+      const storageRef = storage.ref(`videos/${file.name}`);
+      storageRef.put(file).then(snapshot => {
+        return snapshot.ref.getDownloadURL();
+      }).then(url => {
+        const newVideoRef = videosRef.push();
+        newVideoRef.set({ url, name: file.name });
+        document.getElementById('video-form').reset();
+      }).catch(console.error);
+    });
+
+    // Display pictures
+    picturesRef.on('value', (snapshot) => {
+      const picturesList = document.getElementById('pictures-list');
+      picturesList.innerHTML = '';
+      snapshot.forEach((childSnapshot) => {
+        const data = childSnapshot.val();
+        const li = document.createElement('li');
+        li.classList.add('list-group-item', 'd-flex', 'justify-content-between', 'align-items-center');
+        li.innerHTML = `
+          <img src="${data.url}" alt="${data.name}" class="img-thumbnail" style="max-width: 100px; margin-right: 10px;">
+          <span>${data.name}</span>
+          <button class="btn btn-danger btn-sm" onclick="deletePicture('${childSnapshot.key}', '${data.name}')">Delete</button>
+        `;
+        picturesList.appendChild(li);
+      });
+    });
+
+    // Display videos
+    videosRef.on('value', (snapshot) => {
+      const videosList = document.getElementById('videos-list');
+      videosList.innerHTML = '';
+      snapshot.forEach((childSnapshot) => {
+        const data = childSnapshot.val();
+        const li = document.createElement('li');
+        li.classList.add('list-group-item', 'd-flex', 'justify-content-between', 'align-items-center');
+        li.innerHTML = `
+          <video controls src="${data.url}" alt="${data.name}" class="img-thumbnail" style="max-width: 100px; margin-right: 10px;"></video>
+          <span>${data.name}</span>
+          <button class="btn btn-danger btn-sm" onclick="deleteVideo('${childSnapshot.key}', '${data.name}')">Delete</button>
+        `;
+        videosList.appendChild(li);
+      });
+    });
+
+    // Delete picture
+    function deletePicture(key, name) {
+      const storageRef = storage.ref(`pictures/${name}`);
+      storageRef.delete().then(() => {
+        picturesRef.child(key).remove();
+      }).catch(console.error);
+    }
+
+    // Delete video
+    function deleteVideo(key, name) {
+      const storageRef = storage.ref(`videos/${name}`);
+      storageRef.delete().then(() => {
+        videosRef.child(key).remove();
+      }).catch(console.error);
+    }
+
+    // Delete last picture
+    document.getElementById('delete-last-picture').addEventListener('click', () => {
+      picturesRef.limitToLast(1).once('child_added', (snapshot) => {
+        deletePicture(snapshot.key, snapshot.val().name);
+      }).catch(console.error);
+    });
+
+    // Delete last video
+    document.getElementById('delete-last-video').addEventListener('click', () => {
+      videosRef.limitToLast(1).once('child_added', (snapshot) => {
+        deleteVideo(snapshot.key, snapshot.val().name);
+      }).catch(console.error);
+    });
+  </script>
+</body>
+</html>
