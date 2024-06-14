@@ -1,205 +1,245 @@
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
-  <head>
+<head>
     <meta charset="UTF-8" />
     <title>Portfolio</title>
     <link rel="stylesheet" href="style.css" />
     <!-- Fontawesome CDN Link -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  </head>
-  <body>
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/8.5.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.5.0/firebase-storage.js"></script>
+</head>
+<body>
     <!-- Move to up button -->
     <div class="scroll-button">
-      <a href="#home"><i class="fas fa-arrow-up"></i></a>
+        <a href="#home"><i class="fas fa-arrow-up"></i></a>
     </div>
-    <!-- navgaition menu -->
+    <!-- navigation menu -->
     <nav>
-      <div class="navbar">
-        <div class="logo"><a href="#">Portfolio</a></div>
-        <ul class="menu">
-          <li><a href="#home">Home</a></li>
-          <li><a href="#about">About</a></li>
-          <li><a href="#skills">Skills</a></li>
-          <li><a href="#services">Services</a></li>
-          <li><a href="#contact">Contact</a></li>
-          <div class="cancel-btn">
-            <i class="fas fa-times"></i>
-          </div>
-        </ul>
-        <div class="media-icons">
-          <a href="https://www.facebook.com/RCSV14"><i class="fab fa-facebook-f"></i></a>
-          <a href="https://twitter.com/fearless_rc12"><i class="fab fa-twitter"></i></a>
-          <a href="https://www.instagram.com/rhey_c/"><i class="fab fa-instagram"></i></a>
+        <div class="navbar">
+            <div class="logo"><a href="#">Portfolio</a></div>
+            <ul class="menu">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#skills">Skills</a></li>
+                <li><a href="#services">Services</a></li>
+                <li><a href="#contact">Contact</a></li>
+                <div class="cancel-btn">
+                    <i class="fas fa-times"></i>
+                </div>
+            </ul>
+            <div class="media-icons">
+                <a href="https://www.facebook.com/RCSV14"><i class="fab fa-facebook-f"></i></a>
+                <a href="https://twitter.com/fearless_rc12"><i class="fab fa-twitter"></i></a>
+                <a href="https://www.instagram.com/rhey_c/"><i class="fab fa-instagram"></i></a>
+            </div>
         </div>
-      </div>
-      <div class="menu-btn">
-        <i class="fas fa-bars"></i>
-      </div>
+        <div class="menu-btn">
+            <i class="fas fa-bars"></i>
+        </div>
     </nav>
 
     <!-- Home Section Start -->
     <section class="home" id="home">
-      <div class="home-content">
-        <div class="text">
-          <div class="text-one">Hello,</div>
-          <div class="text-two">I'm Rhey Christian</div>
-          <div class="text-three">Virtual Freelancer</div>
-          <div class="text-four">From the Philippines</div>
+        <div class="home-content">
+            <div class="text">
+                <div class="text-one">Hello,</div>
+                <div class="text-two">I'm Rhey Christian</div>
+                <div class="text-three">Virtual Freelancer</div>
+                <div class="text-four">From the Philippines</div>
+            </div>
+            <div class="button">
+                <button id="hire-me-button">Hire Me</button>
+            </div>
         </div>
-        <div class="button">
-          <button>Hire Me</button>
-        </div>
-      </div>
     </section>
 
     <!-- About Section Start -->
     <section class="about" id="about">
-      <div class="content">
-        <div class="title"><span>About Me</span></div>
-        <div class="about-details">
-          <div class="left">
-            <img src="Edited.jpg" alt="" />
-          </div>
-          <div class="right">
-            <div class="topic">Versatile Creative Professional</div>
-            <p>
-              A versatile professional with over 2 years of experience in graphic design, data entry, writing, and social media management. Proficient in Adobe Creative Suite, Microsoft Excel, database software, and various digital platforms. Strong expertise in branding, layout design, typography, color theory, SEO principles, and social media strategy development. Possesses excellent attention to detail, data analysis, and reporting skills. Proven ability to collaborate effectively with cross-functional teams, meet tight deadlines, and maintain confidentiality. Adept at creating visually appealing and on-brand designs, as well as compelling and optimized written content. Additionally, has experience in tutoring and teaching Health Science and Biology, as well as quality inspection in the manufacturing industry.
-            </p>
-            <div class="button">
-              <button>Download CV</button>
+        <div class="content">
+            <div class="title"><span>About Me</span></div>
+            <div class="about-details">
+                <div class="left">
+                    <img src="Edited.jpg" alt="" />
+                </div>
+                <div class="right">
+                    <div class="topic">Versatile Creative Professional</div>
+                    <p>
+                        A versatile professional with over 2 years of experience in graphic design, data entry, writing, and social media management. Proficient in Adobe Creative Suite, Microsoft Excel, database software, and various digital platforms. Strong expertise in branding, layout design, typography, color theory, SEO principles, and social media strategy development. Possesses excellent attention to detail, data analysis, and reporting skills. Proven ability to collaborate effectively with cross-functional teams, meet tight deadlines, and maintain confidentiality. Adept at creating visually appealing and on-brand designs, as well as compelling and optimized written content. Additionally, has experience in tutoring and teaching Health Science and Biology, as well as quality inspection in the manufacturing industry.
+                    </p>
+                    <div class="button">
+                      <button id="download-cv-button">Download CV</button>
+                    </div>
+                    
+                </div>
             </div>
-          </div>
         </div>
-      </div>
     </section>
 
     <!-- My Skill Section Start -->
     <section class="skills" id="skills">
-      <div class="content">
-        <div class="title"><span>My Skills</span></div>
-        <div class="skills-details">
-          <div class="text">
-            <div class="topic">Skills Reflects Our Knowledge</div>
-            <p>Proficient in Adobe Creative Suite, Microsoft Excel, database software, and various digital platforms. Strong expertise in branding, layout design, typography, color theory, SEO principles, and social media strategy development. Possesses excellent attention to detail, data analysis, and reporting skills. Proven ability to collaborate effectively with cross-functional teams, meet tight deadlines, and maintain confidentiality. Adept at creating visually appealing and on-brand designs, as well as compelling and optimized written content. Additionally, has experience in tutoring and teaching Health Science and Biology, as well as quality inspection in the manufacturing industry.</p>
-            <div class="experience">
-              <div class="num">5</div>
-              <div class="exp">
-                Years Of <br />
-                Experience
-              </div>
+        <div class="content">
+            <div class="title"><span>My Skills</span></div>
+            <div class="skills-details">
+                <div class="text">
+                    <div class="topic">Skills Reflects Our Knowledge</div>
+                    <p>Proficient in Adobe Creative Suite, Microsoft Excel, database software, and various digital platforms. Strong expertise in branding, layout design, typography, color theory, SEO principles, and social media strategy development. Possesses excellent attention to detail, data analysis, and reporting skills. Proven ability to collaborate effectively with cross-functional teams, meet tight deadlines, and maintain confidentiality. Adept at creating visually appealing and on-brand designs, as well as compelling and optimized written content. Additionally, has experience in tutoring and teaching Health Science and Biology, as well as quality inspection in the manufacturing industry.</p>
+                    <div class="experience">
+                        <div class="num">5</div>
+                        <div class="exp">
+                            Years Of <br />
+                            Experience
+                        </div>
+                    </div>
+                </div>
+                <div class="boxes">
+                    <div class="box">
+                        <div class="topic">HTML</div>
+                        <div class="per">90%</div>
+                    </div>
+                    <div class="box">
+                        <div class="topic">CSS</div>
+                        <div class="per">80%</div>
+                    </div>
+                    <div class="box">
+                        <div class="topic">JavScript</div>
+                        <div class="per">70%</div>
+                    </div>
+                    <div class="box">
+                        <div class="topic">SMM</div>
+                        <div class="per">80%</div>
+                    </div>
+                </div>
             </div>
-          </div>
-          <div class="boxes">
-            <div class="box">
-              <div class="topic">HTML</div>
-              <div class="per">90%</div>
-            </div>
-            <div class="box">
-              <div class="topic">CSS</div>
-              <div class="per">80%</div>
-            </div>
-            <div class="box">
-              <div class="topic">JavScript</div>
-              <div class="per">70%</div>
-            </div>
-            <div class="box">
-              <div class="topic">SMM</div>
-              <div class="per">80%</div>
-            </div>
-          </div>
         </div>
-      </div>
     </section>
 
     <!-- My Services Section Start -->
-<section class="services" id="services">
-  <div class="content">
-    <div class="title"><span>My Services</span></div>
-    <div class="boxes">
-      <div class="box" data-target="Servicess/webdev.html">
-        <div class="icon">
-          <i class="fas fa-desktop"></i>
+    <section class="services" id="services">
+        <div class="content">
+            <div class="title"><span>My Services</span></div>
+            <div class="boxes">
+                <div class="box" data-target="Servicess/webdev.html">
+                    <div class="icon">
+                        <i class="fas fa-desktop"></i>
+                    </div>
+                    <div class="topic">Web Development</div>
+                    <p>Professional creation and maintenance of websites, ensuring functionality, user experience, and performance across various platforms and devices.</p>
+                </div>
+                <div class="box" data-target="Servicess/Graphic.html">
+                    <div class="icon">
+                        <i class="fas fa-paint-brush"></i>
+                    </div>
+                    <div class="topic">Graphic Design</div>
+                    <p>Creative design services for logos, branding, marketing materials, and more, tailored to visually communicate your brand's message and values.</p>
+                </div>
+                <div class="box" data-target="Servicess/SMM.html">
+                    <div class="icon">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <div class="topic">Social Media Manager</div>
+                    <p>Expert management of your social media presence, including content creation, scheduling, engagement, and analytics to boost your online reach and interaction.</p>
+                </div>
+                <div class="box" data-target="Servicess/DataEntry.html">
+                    <div class="icon">
+                        <i class="fab fa-android"></i>
+                    </div>
+                    <div class="topic">Data Entry</div>
+                    <p>Accurate and efficient data entry services to help organize, manage, and maintain your business records and databases.</p>
+                </div>
+                <div class="box" data-target="Servicess/VideoEdit.html">
+                    <div class="icon">
+                        <i class="fas fa-camera-retro"></i>
+                    </div>
+                    <div class="topic">Video Editing</div>
+                    <p>Professional video editing services to create engaging and polished videos for marketing, presentations, social media, and other purposes.</p>
+                </div>
+                <div class="box" data-target="Servicess/VA.html">
+                    <div class="icon">
+                        <i class="fas fa-tablet-alt"></i>
+                    </div>
+                    <div class="topic">Virtual Assistant</div>
+                    <p>Reliable virtual assistant services to handle administrative tasks, email management, scheduling, and other support functions, helping you stay organized and focused.</p>
+                </div>
+            </div>
         </div>
-        <div class="topic">Web Development</div>
-        <p>Professional creation and maintenance of websites, ensuring functionality, user experience, and performance across various platforms and devices.</p>
-      </div>
-      <div class="box" data-target="Servicess/Graphic.html">
-        <div class="icon">
-          <i class="fas fa-paint-brush"></i>
-        </div>
-        <div class="topic">Graphic Design</div>
-        <p>Creative design services for logos, branding, marketing materials, and more, tailored to visually communicate your brand's message and values.</p>
-      </div>
-      <div class="box" data-target="Servicess/SMM.html">
-        <div class="icon">
-          <i class="fas fa-chart-line"></i>
-        </div>
-        <div class="topic">Social Media Manager</div>
-        <p>Expert management of your social media presence, including content creation, scheduling, engagement, and analytics to boost your online reach and interaction.</p>
-      </div>
-      <div class="box" data-target="Servicess/DataEntry.html">
-        <div class="icon">
-          <i class="fab fa-android"></i>
-        </div>
-        <div class="topic">Data Entry</div>
-        <p>Accurate and efficient data entry services to help organize, manage, and maintain your business records and databases.</p>
-      </div>
-      <div class="box" data-target="Servicess/VideoEdit.html">
-        <div class="icon">
-          <i class="fas fa-camera-retro"></i>
-        </div>
-        <div class="topic">Video Editing</div>
-        <p>Professional video editing services to create engaging and polished videos for marketing, presentations, social media, and other purposes.</p>
-      </div>
-      <div class="box" data-target="Servicess/VA.html">
-        <div class="icon">
-          <i class="fas fa-tablet-alt"></i>
-        </div>
-        <div class="topic">Virtual Assistant</div>
-        <p>Reliable virtual assistant services to handle administrative tasks, email management, scheduling, and other support functions, helping you stay organized and focused.</p>
-      </div>
-    </div>
-  </div>
-</section>
+    </section>
 
     <!-- Contact Me section Start -->
     <section class="contact" id="contact">
-      <div class="content">
-        <div class="title"><span>Contact Me</span></div>
-        <div class="text">
-          <div class="topic">Have Any Project?</div>
-          <p>Let's talk about how I can support you in accomplishing your idea. I'm a dedicated and competent freelancer with a track record of comprehending customer needs and converting them into meaningful outcomes. I accomplish my best work in collaborative settings, where there is open communication and a common goal.</p>
-          <div class="button">
-            <a href="livechat.html"><button>Let's Chat</button></a>
-          </div>
+        <div class="content">
+            <div class="title"><span>Contact Me</span></div>
+            <div class="text">
+                <div class="topic">Have Any Project?</div>
+                <p>Let's talk about how I can support you in accomplishing your idea. I'm a dedicated and competent freelancer with a track record of comprehending customer needs and converting them into meaningful outcomes. I accomplish my best work in collaborative settings, where there is open communication and a common goal.</p>
+                <div class="button">
+                    <a href="livechat.html"><button>Let's Chat</button></a>
+                </div>
+            </div>
         </div>
-      </div>
     </section>
 
     <!-- Footer Section Start -->
     <footer>
-      <div class="text">
-        <span>Created By <a href="#">Rhey Christian S. Verunque</a> | &#169; 2024 All Rights Reserved</span>
-      </div>
+        <div class="text">
+            <span>Created By <a href="#">Rhey Christian S. Verunque</a> | &#169; 2024 All Rights Reserved</span>
+        </div>
     </footer>
 
+    <script src="https://www.gstatic.com/firebasejs/8.5.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.5.0/firebase-storage.js"></script>
     <script src="script.js"></script>
 
     <script>
       document.addEventListener('DOMContentLoaded', function() {
-        const boxes = document.querySelectorAll('.box');
-    
-        boxes.forEach(box => {
-          box.addEventListener('click', function() {
-            const target = this.getAttribute('data-target');
-            if (target) {
-              window.location.href = target;
-            }
+          const firebaseConfig = {
+              apiKey: "AIzaSyCSU-k8Jq1xToWcB1ziTkbRIRsdP-ZQaQM",
+              authDomain: "dbmsfinalproject-bf251.firebaseapp.com",
+              projectId: "dbmsfinalproject-bf251",
+              storageBucket: "dbmsfinalproject-bf251.appspot.com",
+              messagingSenderId: "90588500114",
+              appId: "1:90588500114:web:6c043a1f9f7337ac8a964b",
+              measurementId: "G-LX32VZK2ZM"
+          };
+          // Initialize Firebase
+          firebase.initializeApp(firebaseConfig);
+          const storage = firebase.storage();
+
+          const boxes = document.querySelectorAll('.box');
+          const hireMeButton = document.getElementById('hire-me-button');
+          const downloadCvButton = document.getElementById('download-cv-button');
+
+          // Scroll to Contact Me section on Hire Me button click
+          hireMeButton.addEventListener('click', function() {
+              document.getElementById('contact').scrollIntoView({ behavior: 'smooth' });
           });
-        });
+
+          // Download CV button click
+          downloadCvButton.addEventListener('click', function() {
+              const cvRef = storage.ref('Verunque Rhey Christian S. Work CV_organized.pdf');
+              cvRef.getDownloadURL().then((url) => {
+                  const a = document.createElement('a');
+                  a.href = url;
+                  a.download = 'Verunque Rhey Christian S. Work CV_organized.pdf';
+                  document.body.appendChild(a);
+                  a.click();
+                  document.body.removeChild(a);
+              }).catch((error) => {
+                  console.error('Error downloading CV:', error);
+              });
+          });
+
+          boxes.forEach(box => {
+              box.addEventListener('click', function() {
+                  const target = this.getAttribute('data-target');
+                  if (target) {
+                      window.location.href = target;
+                  }
+              });
+          });
       });
     </script>
-    
-  </body>
+</body>
 </html>
